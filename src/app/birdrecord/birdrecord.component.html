@@ -1,4 +1,3 @@
-<userlists></userlists>
 <hr>
 <div>Sammenlign med
     <button type="button" *ngFor="let u of users" (click)="getCompareDKList(u.code)">{{u.name}}</button>
@@ -10,8 +9,8 @@
     <thead><th>id</th><th>Navn</th></thead>
     <tbody>
       <tr *ngFor="let rec of birdRecords">
-        <td>{{rec.species_id}}</td>
-        <td>{{rec.bird_name}}</td>
+        <td>{{rec.speciesId}}</td>
+        <td>{{rec.birdName}}</td>
       </tr>
     </tbody>
   </table>
@@ -22,8 +21,8 @@
     <thead><th>id</th><th>Navn</th></thead>
     <tbody>
       <tr *ngFor="let rec of filteredRecords">
-        <td>{{rec.species_id}}</td>
-        <td>{{rec.bird_name}}</td>
+        <td>{{rec.speciesId}}</td>
+        <td>{{rec.birdName}}</td>
       </tr>
     </tbody>
   </table>  

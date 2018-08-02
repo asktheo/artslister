@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
+import { Observable} from 'rxjs';
+import { map } from "rxjs/operators";
 
-import 'rxjs/add/operator/toPromise';
 
 import { BirdRecord } from './birdrecord';
 
 @Injectable()
 export class BirdRecordService {
-    private url = '/assets/';  // URL to web api
+    private API_URL = 'http://localhost:8080/netfugl';  // URL to web api
 
     constructor(private http: Http) { }
 
-    getDKList(code): Promise<Array<BirdRecord>> {
+    getDKList(code): Observable<BirdRecord[]> {
         return this.http
-            .get(this.url + code + "_dklist.json")
-            .toPromise()
-            .then((response) => {
-                return response.json() as BirdRecord[];
-            })
-            .catch(this.handleError);
+            .get(this.API_URL + "/dkchecklist?profile_id=" + code)
+            .pipe(map(response => {
+                const all = response.json();
+                return all.map((p) => new BirdRecord(p));
+              }));
     }
 
     filterList(list1,list2): Array<BirdRecord> {
