@@ -1,0 +1,7 @@
+<h3>Profiles</h3>
+<div class="grid grid-pad" *ngIf="profiles">
+    {{profiles.length}} loaded
+    <ul class="module users" *ngFor="let rec of profiles" (click)="getUser(rec.profileId)" class="col-1-4">
+      <li>{{rec.firstName}} {{rec.lastName}} <a href="birdrecords/{{rec.profileId}}">DK liste</a></li>
+    </ul>
+</div>
