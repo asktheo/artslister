@@ -23,19 +23,25 @@ export class BirdRecordComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.forEach((params: Params) => {
-      if (params['code'] !== undefined) {
-        const code = params['code'];
-        this.selectedName = code;
-        this.navigated = true;
-        this.service
-          .getDKList(code)
-          .subscribe(recs => this.birdRecords = recs);
-      } else {
-            this.navigated = false;
-      }
-    });
+    // this.route.params.forEach((params: Params) => {
+    //   if (params['code'] !== undefined) {
+    //     const code = params['code'];
+    //     this.selectedName = code;
+    //     this.navigated = true;
+    //     this.service
+    //       .getDKList(code)
+    //       .subscribe(recs => this.birdRecords = recs);
+    //   } else {
+    //         this.navigated = false;
+    //   }
+    // });
   }
+
+loadDK(code) : void {
+  this.service.getDKList(code)
+  .subscribe(recs => this.birdRecords = recs);
+}
+
 
   getCompareDKList(code) : void {
     this.selectedToCompare = code;

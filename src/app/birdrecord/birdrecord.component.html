@@ -1,6 +1,6 @@
-<hr>
+<!--<hr>
 <div>Sammenlign med
-    <button type="button" *ngFor="let u of users" (click)="getCompareDKList(u.code)">{{u.name}}</button>
+    <button type="button" *ngFor="let u of profiles" (click)="getCompareDKList(u.code)">{{u.name}}</button>
 </div>
   <hr>
 <div class="birdrecords">
@@ -27,3 +27,25 @@
     </tbody>
   </table>  
 </div>
+-->
+
+<div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+  <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+    Select lists <span class="caret"></span>
+  </button>
+  <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu"
+      role="menu" aria-labelledby="button-triggers-manual">
+    <li role="menuitem"><a class="dropdown-item" href="#" (click)="loadDK(rec.profileId)">DK</a></li>
+    <li role="menuitem"><a class="dropdown-item" href="#" (click)="loadWP(rec.profileId)">WP</a></li>
+  </ul>
+</div>
+
+<table>
+  <thead><th>id</th><th>Navn</th></thead>
+  <tbody>
+    <tr *ngFor="let rec of birdRecords">
+      <td>{{rec.speciesId}}</td>
+      <td>{{rec.birdName}}</td>
+    </tr>
+  </tbody>
+</table>

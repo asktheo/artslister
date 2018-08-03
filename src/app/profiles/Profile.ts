@@ -1,3 +1,6 @@
+import { BirdRecord } from '../birdrecord/birdrecord';
+
+
 export class Accessory {
   type: string;
   desc: string;
@@ -17,6 +20,7 @@ export class  Profile {
   profileId: number;
   firstName: string;
   lastName: string;
+  searchName?: string;
   initials?: string;
   nickName?: string;
   yearOfBirth?: number;
@@ -24,8 +28,8 @@ export class  Profile {
   description?: string;
   dreamBirds?: string;
   accessories?: Array<Accessory>;
-  contatInfo?: ContactInfo;
-
+  contactInfo?: ContactInfo;
+  birdRecords?: Array<BirdRecord>;
   constructor(values: Object = {}) {
     Object.assign(this, values);
   }

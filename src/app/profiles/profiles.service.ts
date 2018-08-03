@@ -12,12 +12,19 @@ const API_URL = environment.apiUrl;
 
 @Injectable()
 export class ProfileService {
-    private profiles : Profile[] = null;
+    private profiles : Profile[] = [];
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) { 
+      this.getProfilesFromAPI().subscribe(
+        (profiles) => {
+          this.profiles = profiles;
+          this.profiles.map(p => p.searchName = (p.firstName + " " + p.lastName));
+        }
+      );
+    }
 
 
-    getProfiles(): Observable<Profile[]> {
+    getProfilesFromAPI(): Observable<Profile[]> {
         return this.http
           .get(API_URL + '/profiles')
           .pipe(map(response => {
@@ -27,8 +34,17 @@ export class ProfileService {
           //.catch(this.handleError);
       }
 
-    
-      getProfile(id): Profile {
+      getProfiles(): Profile[] {
+
+        return this.profiles;
+      }
+
+
+      findProfile(s : string): Profile {
+        return this.profiles.find(user => user.searchName === s);
+      }
+
+      getProfile(id : number): Profile {
         return this.profiles.find(user => user.profileId === id);
       }
 
