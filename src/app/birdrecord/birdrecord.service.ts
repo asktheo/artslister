@@ -5,16 +5,20 @@ import { map } from "rxjs/operators";
 
 
 import { BirdRecord } from './birdrecord';
+import { environment } from 'environments/environment';
+
+//set the url for the service
+const API_URL = environment.apiUrl;
 
 @Injectable()
 export class BirdRecordService {
-    private API_URL = 'http://localhost:8080/netfugl';  // URL to web api
+      // URL to web api
 
     constructor(private http: Http) { }
 
     getDKList(code): Observable<BirdRecord[]> {
         return this.http
-            .get(this.API_URL + "/dkchecklist?profile_id=" + code)
+            .get(API_URL + "/dkchecklist?profile_id=" + code)
             .pipe(map(response => {
                 const all = response.json();
                 return all.map((p) => new BirdRecord(p));

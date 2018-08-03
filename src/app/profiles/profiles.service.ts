@@ -5,10 +5,13 @@ import { map } from "rxjs/operators";
 
 
 import { Profile } from './Profile';
+import { environment } from 'environments/environment';
+
+//set the url for the service
+const API_URL = environment.apiUrl;
 
 @Injectable()
 export class ProfileService {
-    private API_URL = 'http://localhost:8080/netfugl';  // URL to web api
     private profiles : Profile[] = null;
 
     constructor(private http: Http) { }
@@ -16,7 +19,7 @@ export class ProfileService {
 
     getProfiles(): Observable<Profile[]> {
         return this.http
-          .get(this.API_URL + '/profiles')
+          .get(API_URL + '/profiles')
           .pipe(map(response => {
             const all = response.json();
             return all.map((p) => new Profile(p));
