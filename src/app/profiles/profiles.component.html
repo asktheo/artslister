@@ -1,12 +1,32 @@
-<h3>Profiles</h3>
-<div class="grid grid-pad" *ngIf="profiles">
-    <div *ngIf="profile1" class="col-2">{{profile1.firstName}}</div>
-    <div *ngIf="profile2" class="col-2">{{profile2.firstName}}</div>
-    <p>{{profiles.length}} loaded. Select one here
-    <input [(ngModel)]="customSelected"
-           [typeahead]="profiles"
-           typeaheadOptionField="searchName"
-           class="form-control">
-          </p>
-          <button class="button" (click)="setUser()">Select</button>
-</div>
+<main class="container">
+    <h1 class="h1">{{profiles.length}} profiles loaded</h1>
+    <h3 class="h3">Select one for each column</h3>
+    <div class="row" *ngIf="profiles">
+        <span class="col">
+                <input [(ngModel)]="sel1" [typeahead]="profiles" typeaheadOptionField="searchName" class="form-control">
+                <button class="btn" (click)="setUser1()">Select</button>
+                <app-birdrecord [profile]="profile1" (notify)="setRecords(profile1,$event)"></app-birdrecord>
+        </span>
+        <span class="col">
+                <input [(ngModel)]="sel2" [typeahead]="profiles" typeaheadOptionField="searchName" class="form-control">
+                <button class="btn" (click)="setUser2()">Select</button>
+                <app-birdrecord [profile]="profile2" (notify)="setRecords(profile2,$event)"></app-birdrecord>
+        </span>
+        <span class="col">
+                <div *ngIf="profile1 &amp;&amp; profile2 &amp;&amp; profile1.birdRecords &amp;&amp; profile2.birdRecords">
+                    <i>Show a list of items in the first list which are not present in the second list: </i>
+                    <button class="btn" (click)="compare()">Compare</button>
+                </div>
+                <table style="width:100%">
+                        <thead><th>Name</th><th>Latin Name</th></thead>
+                        <tbody>
+                          <tr aria-colspan="3" *ngIf="compareList">{{compareList.length}}<td></td></tr>
+                          <tr *ngFor="let rec of compareList">
+                            <td>{{rec.birdName}}</td>
+                            <td>{{rec.latinBirdName}}</td>
+                          </tr>
+                        </tbody>
+                </table>
+        </span>    
+    </div>
+</main>

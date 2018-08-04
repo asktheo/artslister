@@ -1,12 +1,21 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<header class="header" style="text-align:center">
-  <h1>
-     {{title}} - demo
-  </h1>
-    <nav class="nav">
-      <a routerLink="/dashboard" routerLinkActive="active">Home</a>
-      <a routerLink="/profiles" routerLinkActive="active">Profiles</a>
-    </nav>
-    <router-outlet></router-outlet>
-</header>
+<div class="container">
+  <header class="row">
+    <div class="col">
+      <h3 class="masthead-brand">{{title}} - demo</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Home</a>
+        <a class="nav-link" routerLink="/profiles" routerLinkActive="active">Profiles</a>
+      </nav>
+    </div>
+  </header>
 
+  <router-outlet></router-outlet>
+
+  <footer class="row">
+    <div class="col">
+      <p>
+      <a class="nav-link" routerLink="/">Back to main page</a>
+    </p>
+    </div>
+  </footer>
+</div>

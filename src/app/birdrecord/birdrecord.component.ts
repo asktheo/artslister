@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { BirdRecordService } from './birdrecord.service';
-import { BirdRecord } from './birdrecord';
+import { BirdRecord } from './birdrecordtype';
+import { Profile } from '../profiles/Profile';
+import { EventEmitter } from '@angular/core';
+import { ListModel } from './ListModel';
 
 @Component({
   selector: 'app-birdrecord',
@@ -10,46 +13,30 @@ import { BirdRecord } from './birdrecord';
   styleUrls: ['./birdrecord.component.css']
 })
 export class BirdRecordComponent implements OnInit {
-  birdRecords: BirdRecord[];
-  compareRecords: BirdRecord[];
-  filteredRecords: BirdRecord[];
-  total: number = 0;
-  navigated = false; // true if navigated here
-  selectedName : string;
-  selectedToCompare : string;
+  @Input() profile: Profile;
+  public birdRecords: BirdRecord[];
+  @Output() notify: EventEmitter<Array<BirdRecord>> = new EventEmitter<Array<BirdRecord>>();
+  private model: ListModel;
 
   constructor(
     private service: BirdRecordService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.route.params.forEach((params: Params) => {
-    //   if (params['code'] !== undefined) {
-    //     const code = params['code'];
-    //     this.selectedName = code;
-    //     this.navigated = true;
-    //     this.service
-    //       .getDKList(code)
-    //       .subscribe(recs => this.birdRecords = recs);
-    //   } else {
-    //         this.navigated = false;
-    //   }
-    // });
+    this.model = new ListModel();
+    this.model.listType = "DK";
   }
 
-loadDK(code) : void {
-  this.service.getDKList(code)
-  .subscribe(recs => this.birdRecords = recs);
-}
-
-
-  getCompareDKList(code) : void {
-    this.selectedToCompare = code;
-    this.service.getDKList(code)
-          .subscribe(recs => {
-            this.compareRecords = recs;
-            this.filteredRecords = this.service.filterList(this.birdRecords,this.compareRecords);
-          });
+  loadList(): void {
+    let params : any = {
+        list: this.model.listType,
+        id: this.profile.profileId
+    }
+    this.service.getList(params)
+      .subscribe((recs) => {
+        this.birdRecords = recs;
+        this.notify.emit(this.birdRecords);
+      });
   }
 
 }

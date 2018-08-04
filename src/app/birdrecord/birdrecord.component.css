@@ -10,7 +10,6 @@ ul.users > li{
     background: #ddd;
 }
 
-.birdrecords {
-    float:left;
-    width:40%
+table > tr > td {
+    font-size:0.8rem;
 }

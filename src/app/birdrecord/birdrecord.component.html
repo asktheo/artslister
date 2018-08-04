@@ -1,51 +1,27 @@
-<!--<hr>
-<div>Sammenlign med
-    <button type="button" *ngFor="let u of profiles" (click)="getCompareDKList(u.code)">{{u.name}}</button>
-</div>
-  <hr>
-<div class="birdrecords">
-  <h4>{{selectedName}} - total: {{birdRecords.length}}</h4>
-  <table>
-    <thead><th>id</th><th>Navn</th></thead>
-    <tbody>
-      <tr *ngFor="let rec of birdRecords">
-        <td>{{rec.speciesId}}</td>
-        <td>{{rec.birdName}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="birdrecords">
-  <h4>{{selectedToCompare}} - total: {{compareRecords.length}}, ikke set: {{filteredRecords.length}}</h4>  
-  <table>
-    <thead><th>id</th><th>Navn</th></thead>
-    <tbody>
-      <tr *ngFor="let rec of filteredRecords">
-        <td>{{rec.speciesId}}</td>
-        <td>{{rec.birdName}}</td>
-      </tr>
-    </tbody>
-  </table>  
-</div>
--->
 
-<div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
-  <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-    Select lists <span class="caret"></span>
-  </button>
-  <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu"
-      role="menu" aria-labelledby="button-triggers-manual">
-    <li role="menuitem"><a class="dropdown-item" href="#" (click)="loadDK(rec.profileId)">DK</a></li>
-    <li role="menuitem"><a class="dropdown-item" href="#" (click)="loadWP(rec.profileId)">WP</a></li>
-  </ul>
-</div>
-
-<table>
-  <thead><th>id</th><th>Navn</th></thead>
+ <form #f="ngForm" *ngIf="profile">
+  <div class="form-check form-check-inline">
+      <label class="form-check-label">DK
+          <input name="options" type="radio" value="DK"  [(ngModel)]="model.listType">
+      </label>
+      <label class="form-check-label">WP
+        <input name="options" type="radio" value="WP" [(ngModel)]="model.listType" >
+    </label>
+  </div>
+  <div class="form-control form-control-inline">
+    <button class="btn btn-default btn-md" (click)="loadList()">Get list</button>
+  </div>
+</form>
+<div *ngIf="birdRecords">List contains {{birdRecords.length}} species</div>
+<table style="width:100%" *ngIf="birdRecords">
+  <thead>
+    <th>species id</th><th>Species Name</th><th>Latin Name</th>
+  </thead>
   <tbody>
     <tr *ngFor="let rec of birdRecords">
       <td>{{rec.speciesId}}</td>
       <td>{{rec.birdName}}</td>
+      <td>{{rec.latinBirdName}}</td>
     </tr>
   </tbody>
 </table>

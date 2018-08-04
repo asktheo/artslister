@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from './profiles.service';
 import { Profile } from './Profile';
 import { Router } from '@angular/router';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BirdRecord } from '../birdrecord/birdrecordtype';
 
 @Component({
   selector: 'app-profiles',
@@ -12,10 +12,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 export class ProfilesComponent implements OnInit {
   private profile1: Profile;
   private profile2: Profile;
-  private customSelected: string;
-  private profiles: Profile[] = [];
-
-  private error: any;
+  private sel1: string;
+  private sel2: string;
+  public profiles: Profile[] = [];
+  private compareList: BirdRecord[] = [];
 
   constructor(
     private router: Router,
@@ -25,24 +25,19 @@ export class ProfilesComponent implements OnInit {
     this.getUsers();
   }
 
-  setUser(event : Event): void {
-
-    var p : Profile = this.service.findProfile(this.customSelected);
-    (!this.profile1)? this.profile1 = p: this.profile2 = p;
-
-    console.log("profile 1", this.profile1);
-    console.log("profile 2", this.profile2)
+  setUser1(event : Event): void {
+    var p : Profile = this.service.findProfile(this.sel1);
+    this.profile1 = p;
   }
 
-  // getUser1(user): void {
-  //   this.profile1 = this.service
-  //     .getProfile(user.id);
-  // }
+  setUser2(event : Event): void {
+    var p : Profile = this.service.findProfile(this.sel2);
+    this.profile2 = p;
+  }
 
-  // getUser2(user): void {
-  //   this.profile2 = this.service
-  //     .getProfile(user.id);
-  // }
+  setRecords(p : Profile, recs: Array<BirdRecord>){
+    p.birdRecords = recs;
+  }
 
   getUsers(): void {
     if(this.service.getProfiles().length == 0) {
@@ -50,6 +45,7 @@ export class ProfilesComponent implements OnInit {
         (profiles) => {
           profiles.map(p => p.searchName = (p.firstName + " " + p.lastName));
           this.profiles = profiles;
+          this.service.setProfiles(profiles);
         }
       );
 
@@ -57,7 +53,10 @@ export class ProfilesComponent implements OnInit {
     else {
       this.profiles = this.service.getProfiles();
     }
+  }
 
+  compare($event): void {
+    this.compareList = this.service.filterList(this.profile1.birdRecords,this.profile2.birdRecords);
   }
 
 

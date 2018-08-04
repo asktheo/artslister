@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable} from 'rxjs';
 import { map } from "rxjs/operators";
 
-
+import { BirdRecord} from '../birdrecord/birdrecordtype';
 import { Profile } from './Profile';
 import { environment } from 'environments/environment';
 
@@ -15,14 +15,8 @@ export class ProfileService {
     private profiles : Profile[] = [];
 
     constructor(private http: Http) { 
-      this.getProfilesFromAPI().subscribe(
-        (profiles) => {
-          this.profiles = profiles;
-          this.profiles.map(p => p.searchName = (p.firstName + " " + p.lastName));
-        }
-      );
-    }
 
+    }
 
     getProfilesFromAPI(): Observable<Profile[]> {
         return this.http
@@ -31,14 +25,15 @@ export class ProfileService {
             const all = response.json();
             return all.map((p) => new Profile(p));
           }));
-          //.catch(this.handleError);
       }
 
       getProfiles(): Profile[] {
-
         return this.profiles;
       }
 
+      setProfiles(profiles: Profile[]) {
+        this.profiles = profiles;
+      }
 
       findProfile(s : string): Profile {
         return this.profiles.find(user => user.searchName === s);
@@ -47,6 +42,20 @@ export class ProfileService {
       getProfile(id : number): Profile {
         return this.profiles.find(user => user.profileId === id);
       }
+
+      filterList(list1,list2): Array<BirdRecord> {
+        let filtered : Array<BirdRecord> = list1.filter(function(e){
+            let notInList : boolean = true;
+            for(var i=0;i<list2.length;i++){
+                if(e.speciesId == list2[i].speciesId) {
+                    notInList = false;
+                    break;
+                };
+            }
+            return notInList;
+        });
+        return filtered;
+    }
 
 
     private handleError(error: any): Promise<any> {

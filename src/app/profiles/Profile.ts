@@ -1,4 +1,4 @@
-import { BirdRecord } from '../birdrecord/birdrecord';
+import { BirdRecord } from '../birdrecord/birdrecordtype';
 
 
 export class Accessory {
