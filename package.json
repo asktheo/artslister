@@ -8,7 +8,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +29,8 @@
     "ngx-bootstrap": "^3.0.1",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.0.0-rc.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "snyk": "^1.258.2"
   },
   "devDependencies": {
     "@angular/cli": "^6.1.2",
@@ -48,5 +51,6 @@
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
     "typescript": "~2.9.2"
-  }
+  },
+  "snyk": true
 }
